@@ -1,0 +1,1 @@
+The search for sound sources starts in this directory.

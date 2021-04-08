@@ -1,0 +1,8 @@
+__pycache__*
+*.json
+*.wav
+*.json
+*.dsi
+*.dsd
+*.dmp
+!/damperProfiles/ear.dmp

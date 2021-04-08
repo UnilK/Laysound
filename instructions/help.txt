@@ -1,0 +1,4 @@
+When the render button is pressed the UI generates a header
+file (.dsi) and location data files (.dsd) in this directory.
+Then the Directsound program (DS_API) uses these instructions
+to render the project.

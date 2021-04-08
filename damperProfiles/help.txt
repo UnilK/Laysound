@@ -1,0 +1,1 @@
+Damper profiles are stored in this directory.

@@ -1,0 +1,1 @@
+Renders are stored in this directory.
