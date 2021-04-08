@@ -87,21 +87,3 @@ class MainFrame(tk.Frame):
 
 		self.parent.destroy()
 		
-
-
-if __name__ == "__main__":
-
-	random.seed()
-
-	root = tk.Tk()
-	
-	root.geometry("1200x800")
-
-	root.grid_columnconfigure(0, weight=1)
-	root.grid_rowconfigure(0, weight=1)
-	
-	mainFrame = MainFrame(root)
-
-	root.protocol("WM_DELETE_WINDOW", mainFrame.safe_close)
-	root.mainloop()
-
