@@ -282,7 +282,7 @@ class RecordPage(tk.Frame):
 
 		fileIn = filedialog.askopenfilename(title="select source file", initialdir="audio")
 
-		process = subprocess.run(["./lsapi", "-probe", str(fileIn)], capture_output=True)
+		process = subprocess.run(["./lsapi", "probe", str(fileIn)], capture_output=True)
 		
 		info = process.stdout.decode().splitlines()
 

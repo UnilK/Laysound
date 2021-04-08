@@ -200,7 +200,7 @@ class FilePage(tk.Frame):
 		process = subprocess.run(
 				[
 					"./lsapi", 
-					"-render","instructions/"+self.parent.currentName+".dsi",
+					"render","instructions/"+self.parent.currentName+".dsi",
 					"-o", "renders/"+self.parent.currentName+".wav"
 				],
 				capture_output=True

@@ -11,84 +11,6 @@
 #include"wav_parser.hpp"
 #include"wav_data.hpp"
 
-std::string split_to_mono(
-		Wave_file *file,
-		std::vector<Directed_wave_data*> *storage
-		){
-	
-	uint32_t data_type = (file->subformat<<16)|file->sample_size;
-	uint32_t total_data_size = file->data_chunk_size/file->sample_size;
-
-	Directed_wave_data data_template = Directed_wave_data();
-
-	data_template.samples_per_channel = file->data_chunk_size/file->block_align;
-
-	if(data_type == (uint32_t)0x00010002){
-		
-		// 16-bit PCM.
-		int16_t *buff = new int16_t[total_data_size];
-		
-		if(!file->read_samples(buff, data_template.samples_per_channel)){
-			return "ERROR: IMPROPERLY FORMATTED FILE";
-		}
-
-		for(uint32_t i=0; i<file->channel_amount; i++){
-
-			Directed_wave_data *new_data = new Directed_wave_data();
-			*new_data = data_template;
-
-			new_data->audio_data[0].resize(new_data->samples_per_channel);
-
-			for(uint32_t j=0; j<new_data->samples_per_channel; j++){
-				new_data->audio_data[0][j] = (float)buff[i+j*file->channel_amount]/(1<<15);
-			}
-
-			if(file->sample_rate != new_data->sample_rate){
-				new_data->resample(file->sample_rate);
-			}
-
-			storage->push_back(new_data);
-
-		}
-
-		delete buff;
-
-	} else if(data_type == (uint32_t)0x00030004){
-
-		// 32-bit IEEE
-		float *buff = new float[total_data_size];
-		
-		if(!file->read_samples(buff, data_template.samples_per_channel)){
-			return "ERROR: IMPROPERLY FORMATTED FILE";
-		}
-
-		for(uint32_t i=0; i<file->channel_amount; i++){
-
-			Directed_wave_data *new_data = new Directed_wave_data();
-			*new_data = data_template;
-
-			new_data->audio_data[0].resize(new_data->samples_per_channel);
-
-			for(uint32_t j=0; j<new_data->samples_per_channel; j++){
-				new_data->audio_data[0][j] = buff[i+j*file->channel_amount];
-			}
-			
-			if(file->sample_rate != new_data->sample_rate){
-				new_data->resample(file->sample_rate);
-			}
-
-			storage->push_back(new_data);
-		}
-
-		delete buff;
-
-	} else {
-		return "ERROR: FILE DATA TYPE NOT SUPPORTED";
-	}
-
-	return "OK";
-}
-
 std::string merge_to_mono(
 		Wave_file *file,
 		Directed_wave_data *new_data
@@ -200,19 +122,19 @@ int main(int argc, char **argv){
 	for(int i=0; i<argc; i++){
 		sargv[i] = argv[i];
 	}
-	
+
 	if(sargv.size() == 1) sargv.push_back("-help");
 
 	if(sargv[1] == "-help"){
 
-	} else if(sargv[1] == "-probe" && sargv.size() > 2){
+	} else if(sargv[1] == "probe" && sargv.size() > 2){
 		
 		std::string file_name = sargv[2];
 		Wave_file file(file_name);
 		std::cout << file.initialize() << '\n';
 		file.file_in.close();
 	
-	} else if(sargv[1] == "-render" && sargv.size() > 2){
+	} else if(sargv[1] == "render" && sargv.size() > 2){
 
 		FIR_initialize();
 
@@ -263,35 +185,9 @@ int main(int argc, char **argv){
 
 		}
 
-		product.resample(44100);
-
 		std::cout << product.write_file() << '\n';
 
 		file_in.close();
 	}
-
-	/*
-
-	Wave_file file(file_name);
-
-	std::cout << file.initialize() << '\n';
-
-	std::vector<Directed_wave_data*> datas;
-
-	std::cout << file_to_mono_data(&file, &datas) << '\n';
-
-	datas[0]->file_name = "test2.wav";
-	std::cout << datas[0]->write_file() << '\n';
-
-	int n;
-	std::cin >> n;
-	for(;n--;){
-		int x, y;
-		std::cin >> x >> y;
-		for(int i=0; i<y; i++){
-			std::cout << datas[0]->audio_data[0][x+i] << '\n';
-		}
-	}
-	*/
 
 }
