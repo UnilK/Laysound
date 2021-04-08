@@ -111,11 +111,11 @@ class ToolBar(tk.Frame):
 				command=self.parent.switch_record
 				)
 
-		self.addFreeRouteButton.grid(column=0, row=0, sticky="nw")
-		self.addSoundSourceButton.grid(column=0, row=1, sticky="nw")
-		self.addListenerButton.grid(column=0, row=2, sticky="nw")
-		self.switchTimeFlowButton.grid(column=0, row=3, sticky="nw")
-		self.switchRecordButton.grid(column=0, row=4, sticky="nw")
+		self.addFreeRouteButton.grid(column=0, row=0, sticky="nwes")
+		self.addSoundSourceButton.grid(column=0, row=1, sticky="nwes")
+		self.addListenerButton.grid(column=0, row=2, sticky="nwes")
+		self.switchTimeFlowButton.grid(column=0, row=3, sticky="nwse")
+		self.switchRecordButton.grid(column=0, row=4, sticky="nwes")
 
 	######################### Utility functions ################################
 

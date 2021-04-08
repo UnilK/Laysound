@@ -3,18 +3,18 @@ class Settings():
 	def __init__(
 			self,
 			defaultBrushSize=50, defaultBrushPower=0.01,
-			defaultProject=None, defaultFrameRate=147,
+			defaultProject="saves/head.json", defaultFrameRate=147,
 			defaultFrameHeight=800, defaultFrameWidth=1200):
 
 		self.defaultBrushSize = defaultBrushSize
 		self.defaultBrushPower = defaultBrushPower
-		self.defaultProject = defaultProject
 		self.defaultFrameRate = defaultFrameRate
 		self.defaultFrameHeight = defaultFrameHeight
 		self.defaultFrameWidth = defaultFrameWidth
+		self.defaultProject = defaultProject
 
 class Project():
-	def __init__(self, name="unnamed_project", frameRate = 147, ldots=[]):
+	def __init__(self, name="untitled_project", frameRate = 147, ldots=[]):
 
 		self.name = name
 		self.frameRate = frameRate

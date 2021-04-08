@@ -13,12 +13,10 @@ import copy
 
 import UI.config as config
 
-class FilePage(tk.Frame):
-	def __init__(self, parent, **kwargs):
-		tk.Frame.__init__(self, parent, css.grey1Frame, **kwargs)
+class FileInteraction():
+	def __init__(self, parent):
 
 		self.parent = parent
-		self.mainFrame = parent
 
 		self.ldotTypes = {
 				"free": FreeRoute,
@@ -50,61 +48,10 @@ class FilePage(tk.Frame):
 		self.renderThread = threading.Thread(target=self.render_on_thread)
 		self.renderThreadActive = False
 
-		self.grid_rowconfigure(0, weight=1)
-		self.grid_columnconfigure(1, weight=1)
-
-		self.buttonFrame = tk.Frame(self, css.grey1Frame)
-
-		self.quickSaveButton = tk.Button(
-				self.buttonFrame,
-				css.grey1Button,
-				text="save",
-				command=self.quicksave_project
-				)
-		
-		self.saveButton = tk.Button(
-				self.buttonFrame,
-				css.grey1Button,
-				text="save as",
-				command=self.save_project
-				)
-		
-		self.quickLoadButton = tk.Button(
-				self.buttonFrame,
-				css.grey1Button,
-				text="quickload",
-				command=self.quickload_project
-				)
-		
-		self.loadButton = tk.Button(
-				self.buttonFrame,
-				css.grey1Button,
-				text="load",
-				command=self.load_project
-				)
-		
-		self.renderButton = tk.Button(
-				self.buttonFrame,
-				css.grey1Button,
-				text="render",
-				command=self.render_project
-				)
-		
-		self.buttonFrame.grid(row=0, column=0, sticky="nwes")
-
-		self.grid_rowconfigure(10, weight=1)
-		self.grid_columnconfigure(0, weight=1)
-		
-		self.quickSaveButton.grid(row=0, column=0, sticky="nw")
-		self.saveButton.grid(row=1, column=0, sticky="nw")
-		self.quickLoadButton.grid(row=2, column=0, sticky="nw")
-		self.loadButton.grid(row=3, column=0, sticky="nw")
-		self.renderButton.grid(row=4, column=0, sticky="nw")
-
 	def	quicksave_project(self):
 		
 		with open(self.parent.currentProject, "w") as file_out:
-			save_list = [copy.copy(ldot.__dict__) for ldot in self.mainFrame.ldots]
+			save_list = [copy.copy(ldot.__dict__) for ldot in config.project.ldots]
 
 			for ldot in save_list:
 
@@ -157,30 +104,29 @@ class FilePage(tk.Frame):
 							bind[2] = tagToLdot[bind[2]]
 			
 				
-				for ldot in self.parent.ldots:
+				for ldot in config.project.ldots:
 					self.parent.recordPage.locationTool.delete_ldot(ldot)
 					self.parent.recordPage.timeLine.delete_ldot(ldot)
 				
-				self.parent.ldots = newLdots
-
-				self.parent.ldots = []
+				config.project.ldots = []
 
 				for ldot in newLdots:
-					self.parent.ldots.append(ldot)
+					config.project.ldots.append(ldot)
 					self.parent.recordPage.new_ldot_update()
 
 				self.parent.ldotCount = 0
 
-				for ldot in self.parent.ldots:
+				for ldot in config.project.ldots:
 					self.parent.ldotCount = max(self.parent.ldotCount, int(ldot.tag[1:])+1)
 		
 		except FileNotFoundError:
 			pass
 
 
-	def load_project(self):
+	def load_project(self, fileIn=None):
 		
-		fileIn = filedialog.askopenfilename(title="load project", initialdir="saves")
+		if fileIn== None:
+			fileIn = filedialog.askopenfilename(title="load project", initialdir="saves")
 
 		if fileIn:
 			
@@ -196,7 +142,7 @@ class FilePage(tk.Frame):
 
 	def render_on_thread(self):
 		
-		self.renderButton.configure(state="disabled")
+		self.parent.navBar.renderButton.configure(state="disabled")
 		self.renderThreadActive = True
 
 		process = subprocess.run(
@@ -214,14 +160,14 @@ class FilePage(tk.Frame):
 			print(bit)
 		
 		self.renderThreadActive = False
-		self.renderButton.configure(state="normal")
+		self.parent.navBar.renderButton.configure(state="normal")
 
 	def render_project(self):
 
 		listeners = []
 		sources = []
 
-		for ldot in self.parent.ldots:
+		for ldot in config.project.ldots:
 			if ldot.ldotType == "listener":
 				listeners.append(ldot)
 			elif ldot.ldotType == "source":

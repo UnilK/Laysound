@@ -29,6 +29,11 @@ if __name__ == "__main__":
 
 	mainFrame = MainFrame(root)
 
+	try:
+		mainFrame.fileInteraction.load_project(config.settings.defaultProject)
+	except:
+		pass
+
 	root.protocol("WM_DELETE_WINDOW", mainFrame.safe_close)
 	root.mainloop()
 

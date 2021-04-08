@@ -385,7 +385,7 @@ class LocationTool(tk.Frame):
 
 		visited = {}
 
-		for ldot in self.mainFrame.ldots:
+		for ldot in config.project.ldots:
 			if ldot.beginTime <= time and ldot.endTime > time and not ldot.isHidden:
 				self.canvas.itemconfigure(ldot.tag+"Ldot", state="normal")
 				renderOrder.append((ldot.priority(time, visited), ldot))
@@ -419,7 +419,7 @@ class LocationTool(tk.Frame):
 						x+1.1*ldotScale, y-1.1*ldotScale
 						)
 		
-		if self.showLabels == "normal" and len(self.mainFrame.ldots) > 0:
+		if self.showLabels == "normal" and len(config.project.ldots) > 0:
 			self.to_top("Text")
 		
 		self.to_top(self.scaleIndicator)

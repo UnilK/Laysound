@@ -403,7 +403,7 @@ class TimeLine(tk.Frame):
 
 		renderOrder = []
 
-		for ldot in self.mainFrame.ldots:
+		for ldot in config.project.ldots:
 			
 			xbegin = max(-200, (ldot.beginTime+xoff)/self.timeCompress)
 			xend = min(xdim+200, (ldot.endTime+xoff)/self.timeCompress)

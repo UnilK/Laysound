@@ -96,8 +96,8 @@ class RecordPage(tk.Frame):
 
 	def new_ldot_update(self):
 
-		self.timeLine.create_ldot(self.mainFrame.ldots[len(self.mainFrame.ldots)-1])
-		self.locationTool.create_ldot(self.mainFrame.ldots[len(self.mainFrame.ldots)-1])
+		self.timeLine.create_ldot(config.project.ldots[len(config.project.ldots)-1])
+		self.locationTool.create_ldot(config.project.ldots[len(config.project.ldots)-1])
 		self.timeLine.canvasChanged = True
 		self.locationTool.canvasChanged = True
 	
@@ -235,7 +235,7 @@ class RecordPage(tk.Frame):
 			index = 0
 			position = 0
 
-			for ldot in self.mainFrame.ldots:
+			for ldot in config.project.ldots:
 				if ldot == self.selectedLdot:
 					# my problem with the hidden pointers approach:
 					position = index+0
@@ -247,7 +247,7 @@ class RecordPage(tk.Frame):
 			self.timeLine.delete_ldot(self.selectedLdot)
 
 			self.unselect_ldot()
-			self.mainFrame.ldots.pop(position)
+			config.project.ldots.pop(position)
 
 		self.locationTool.canvasChanged = True
 		self.timeLine.canvasChanged = True
@@ -266,14 +266,14 @@ class RecordPage(tk.Frame):
 
 		theta = 2*math.pi*random.random()
 
-		self.mainFrame.ldots.append(
+		config.project.ldots.append(
 				FreeRoute(
 					beginTime=self.timestamp,
 					endTime=self.timestamp+self.frameRate*10,
 					xpos=math.cos(theta),
 					ypos=math.sin(theta),
 					tag=self.tag_number(),
-					slot=len(self.mainFrame.ldots),
+					slot=len(config.project.ldots),
 					bind = self.selectedLdot
 					)
 				)
@@ -305,14 +305,14 @@ class RecordPage(tk.Frame):
 
 			length = infoDict["data_chunk_size"]/infoDict["byte_rate"]
 
-			self.mainFrame.ldots.append(
+			config.project.ldots.append(
 					SoundSource(
 						beginTime=self.timestamp,
 						endTime=self.timestamp+math.ceil(147*length),
 						xpos=math.cos(theta),
 						ypos=math.sin(theta),
 						tag=self.tag_number(),
-						slot=len(self.mainFrame.ldots),
+						slot=len(config.project.ldots),
 						bind = self.selectedLdot,
 						sourceInfo = infoDict
 						)
@@ -328,14 +328,14 @@ class RecordPage(tk.Frame):
 
 		theta = 2*math.pi*random.random()
 
-		self.mainFrame.ldots.append(
+		config.project.ldots.append(
 				Listener(
 					beginTime=self.timestamp,
 					endTime=self.timestamp+self.frameRate*10,
 					xpos=math.cos(theta),
 					ypos=math.sin(theta),
 					tag=self.tag_number(),
-					slot=len(self.mainFrame.ldots),
+					slot=len(config.project.ldots),
 					bind = self.selectedLdot
 					)
 				)

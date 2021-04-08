@@ -6,4 +6,5 @@ __pycache__*
 *.dsd
 *.dmp
 !/UI/default_settings.json
+!/saves/head.json
 !/damperProfiles/ear.dmp
