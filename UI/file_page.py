@@ -11,6 +11,8 @@ import time
 import json
 import copy
 
+import UI.config as config
+
 class FilePage(tk.Frame):
 	def __init__(self, parent, **kwargs):
 		tk.Frame.__init__(self, parent, css.grey1Frame, **kwargs)

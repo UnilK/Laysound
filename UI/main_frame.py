@@ -5,7 +5,7 @@ from UI.record_page import RecordPage
 from UI.file_page import FilePage
 import UI.canvas_styles as css
 
-
+import UI.config as config
 
 class HelpPage(tk.Frame):
 	def __init__(self, parent, **kwargs):

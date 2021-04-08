@@ -8,6 +8,8 @@ import json
 from UI.location_data import *
 import UI.canvas_styles as css
 
+import UI.config as config
+
 class ToolBar(tk.Frame):
 	def __init__(self, parent, **kwargs):
 		tk.Frame.__init__(self, parent, css.grey1Frame, **kwargs)

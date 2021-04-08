@@ -7,6 +7,8 @@ import random
 
 import UI.canvas_styles as css
 
+import UI.config as config
+
 class LocationData():
 
 	def __init__(

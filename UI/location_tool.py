@@ -3,24 +3,9 @@ import math
 
 import UI.canvas_styles as css
 
+import UI.config as config
+
 class LocationTool(tk.Frame):
-
-	"""
-	intended behaviour:
-
-	double clicking an ldot will select it
-	holding LMB anywhere will move the ldot around
-	holding RMB will move the canvas
-	
-	grabbed ldot will be highlighted, possibly shows it's path later on.
-
-	pros:
-	allows "layered movement recording" which makes
-	continuing a recording easy.
-
-	cons:
-	probably something I've overlooked.
-	"""
 
 	def __init__(self, parent, **kwargs):
 		tk.Frame.__init__(self, parent, css.grey1Frame, **kwargs)
@@ -41,7 +26,7 @@ class LocationTool(tk.Frame):
 		self.ldotMaxSize = 30
 		self.showLabels = "hidden"
 
-		# 1 pixel = initialScale distance untis
+		# 1 pixel = initialScale distance units
 		self.scrollSpeed = 1.1
 		self.initialScale = 0.01
 		self.scrollMin = 1e-10*self.initialScale

@@ -13,4 +13,15 @@ class Settings():
 		self.defaultFrameHeight = defaultFrameHeight
 		self.defaultFrameWidth = defaultFrameWidth
 
-settings = None
+class Project():
+	def __init__(self, name="unnamed_project", frameRate = 147, ldots=[]):
+
+		self.name = name
+		self.frameRate = frameRate
+		self.ldots = ldots
+
+def init():
+	global settings, project
+	settings = Settings()
+	project = Project()
+
