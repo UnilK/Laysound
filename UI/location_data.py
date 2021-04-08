@@ -5,7 +5,7 @@ import random
 # - We have css at home
 # css at home:
 
-import canvas_styles as css
+import UI.canvas_styles as css
 
 class LocationData():
 

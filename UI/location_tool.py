@@ -1,7 +1,7 @@
 import tkinter as tk
 import math
 
-import canvas_styles as css
+import UI.canvas_styles as css
 
 class LocationTool(tk.Frame):
 

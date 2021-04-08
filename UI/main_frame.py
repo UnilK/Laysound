@@ -1,9 +1,9 @@
 import tkinter as tk
 
-from location_data import *
-from record_page import RecordPage
-from file_page import FilePage
-import canvas_styles as css
+from UI.location_data import *
+from UI.record_page import RecordPage
+from UI.file_page import FilePage
+import UI.canvas_styles as css
 
 
 

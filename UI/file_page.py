@@ -2,8 +2,8 @@ import tkinter as tk
 from tkinter import filedialog
 
 import math
-from location_data import *
-import canvas_styles as css
+from UI.location_data import *
+import UI.canvas_styles as css
 
 import subprocess
 import threading

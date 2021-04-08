@@ -1,11 +1,12 @@
 import tkinter as tk
 from tkinter import filedialog
-from location_data import *
+
 import math
 import random
-
-import canvas_styles as css
 import json
+
+from UI.location_data import *
+import UI.canvas_styles as css
 
 class ToolBar(tk.Frame):
 	def __init__(self, parent, **kwargs):

@@ -3,7 +3,7 @@ import time
 import math
 import random
 
-import canvas_styles as css
+import UI.canvas_styles as css
 
 class TimeLine(tk.Frame):
 	def __init__(self, parent, **kwargs):

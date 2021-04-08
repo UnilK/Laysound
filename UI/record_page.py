@@ -4,11 +4,11 @@ import time
 import math
 import random
 
-from location_data import *
-from tool_bar import ToolBar
-from time_line import TimeLine
-from location_tool import LocationTool
-import canvas_styles as css
+from UI.location_data import *
+from UI.tool_bar import ToolBar
+from UI.time_line import TimeLine
+from UI.location_tool import LocationTool
+import UI.canvas_styles as css
 
 import pathlib
 import subprocess
