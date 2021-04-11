@@ -291,6 +291,17 @@ class SoundSource(LocationData):
 		# static point
 		self.relativeLocation[0][0] = x
 		self.relativeLocation[0][1] = y
+	
+	def retime(self, beginTime, endTime):
+		
+		if beginTime != self.beginTime:
+			self.beginTime = beginTime
+			self.endTime = self.beginTime+self.length
+		elif endTime != self.endTime:
+			self.endTime = endTime
+			self.beginTime = self.endTime-self.length
+
+		self.initialize_route()
 
 
 class Listener(LocationData):
@@ -324,4 +335,17 @@ class Listener(LocationData):
 		# static point
 		self.relativeLocation[0][0] = x
 		self.relativeLocation[0][1] = y
+	
+	def retime(self, beginTime, endTime):
+
+		for ldot in config.project.ldots:
+			if ldot.ldotType == "listener":
+				ldot.local_retime(beginTime, endTime)
+	
+	def local_retime(self, beginTime, endTime):
 		
+		self.length = max(1, endTime-beginTime)
+		self.beginTime = 0
+		self.endTime = self.length
+
+		self.initialize_route()

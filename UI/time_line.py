@@ -300,13 +300,19 @@ class TimeLine(tk.Frame):
 				self.ldotMove[0] -= dx*self.timeCompress
 			self.ldotMove[1] += dy
 
+			ldot = self.parent.selectedLdot
+
 			if self.ldotMove[0] < -1:
-				self.parent.selectedLdot.beginTime += math.ceil(self.ldotMove[0])
-				self.parent.selectedLdot.endTime += math.ceil(self.ldotMove[0])
+				ldot.retime(
+						ldot.beginTime+math.ceil(self.ldotMove[0]),
+						ldot.endTime+math.ceil(self.ldotMove[0])
+						)
 				self.ldotMove[0] -= math.ceil(self.ldotMove[0])
 			elif self.ldotMove[0] > 1:
-				self.parent.selectedLdot.beginTime += math.floor(self.ldotMove[0])
-				self.parent.selectedLdot.endTime += math.floor(self.ldotMove[0])
+				ldot.retime(
+						ldot.beginTime+math.floor(self.ldotMove[0]),
+						ldot.endTime+math.floor(self.ldotMove[0])
+						)
 				self.ldotMove[0] -= math.floor(self.ldotMove[0])
 
 			self.parent.selectedLdot.slot += self.ldotMove[1]//self.slotSize

@@ -272,7 +272,7 @@ class RecordPage(tk.Frame):
 					xpos=math.cos(theta),
 					ypos=math.sin(theta),
 					tag=self.tag_number(),
-					slot=len(config.project.ldots),
+					slot=random.randint(0, 4),
 					bind = self.selectedLdot
 					)
 				)
@@ -311,7 +311,7 @@ class RecordPage(tk.Frame):
 						xpos=math.cos(theta),
 						ypos=math.sin(theta),
 						tag=self.tag_number(),
-						slot=len(config.project.ldots),
+						slot=random.randint(0, 4),
 						bind = self.selectedLdot,
 						sourceInfo = infoDict
 						)
@@ -329,12 +329,12 @@ class RecordPage(tk.Frame):
 
 		config.project.ldots.append(
 				Listener(
-					beginTime=self.timestamp,
-					endTime=self.timestamp+config.project.frameRate*10,
+					beginTime=config.project.beginTime,
+					endTime=config.project.endTime,
 					xpos=math.cos(theta),
 					ypos=math.sin(theta),
 					tag=self.tag_number(),
-					slot=len(config.project.ldots),
+					slot=random.randint(0, 4),
 					bind = self.selectedLdot
 					)
 				)
