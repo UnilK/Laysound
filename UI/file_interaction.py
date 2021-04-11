@@ -168,9 +168,14 @@ class FileInteraction():
 
 	def render_project(self):
 
-		process = subprocess.run(["rm", "renders/*dsi"])
-		process = subprocess.run(["rm", "renders/*dsd"])
-		
+	
+		process = subprocess.run(["ls", "./instructions"], capture_output=True)
+		oldFiles = process.stdout.decode().splitlines()
+	
+		for oldFile in oldFiles:
+			if oldFile.endswith(".dsi") or oldFile.endswith(".dsd"):
+				process = subprocess.run(["rm", "instructions/"+oldFile])
+
 		listeners = []
 		sources = []
 
