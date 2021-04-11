@@ -18,7 +18,6 @@ class ToolBar(tk.Frame):
 		self.mainFrame = parent.parent
 		
 		self.ldotCount = 0
-		self.frameRate = parent.frameRate
 
 		self.sizeChanged = False
 		self.frameWidth = kwargs["width"]

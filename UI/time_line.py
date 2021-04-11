@@ -14,8 +14,6 @@ class TimeLine(tk.Frame):
 		self.parent = parent
 		self.mainFrame = parent.parent
 		
-		self.frameRate = parent.frameRate
-
 		self.borderMousePosition = [0, 0]
 		self.borderB1State = False
 
@@ -372,10 +370,10 @@ class TimeLine(tk.Frame):
 		
 		logScale = math.log(self.timeCompress)/math.log(10)
 
-		gridSize = self.frameRate*math.exp(math.log(10)*math.floor(logScale))
+		gridSize = config.project.frameRate*math.exp(math.log(10)*math.floor(logScale))
 		if xend/gridSize > 30:
 			logScale = math.ceil(logScale)
-			gridSize = self.frameRate*math.exp(math.log(10)*logScale)
+			gridSize = config.project.frameRate*math.exp(math.log(10)*logScale)
 
 		xoff = self.offset[0]-time
 		yoff = self.offset[1]

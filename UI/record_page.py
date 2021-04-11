@@ -32,7 +32,6 @@ class RecordPage(tk.Frame):
 		self.syncTime = 0
 		self.syncFrame = 0
 
-		self.frameRate = 147
 		self.timestamp = 0
 
 		self.parent = parent
@@ -179,7 +178,7 @@ class RecordPage(tk.Frame):
 					round(
 						1000*max(
 							0,
-							(1/self.frameRate)*self.syncFrame
+							(1/config.project.frameRate)*self.syncFrame
 							+self.syncTime-time.time()
 							)
 						),
@@ -269,7 +268,7 @@ class RecordPage(tk.Frame):
 		config.project.ldots.append(
 				FreeRoute(
 					beginTime=self.timestamp,
-					endTime=self.timestamp+self.frameRate*10,
+					endTime=self.timestamp+config.project.frameRate*10,
 					xpos=math.cos(theta),
 					ypos=math.sin(theta),
 					tag=self.tag_number(),
@@ -331,7 +330,7 @@ class RecordPage(tk.Frame):
 		config.project.ldots.append(
 				Listener(
 					beginTime=self.timestamp,
-					endTime=self.timestamp+self.frameRate*10,
+					endTime=self.timestamp+config.project.frameRate*10,
 					xpos=math.cos(theta),
 					ypos=math.sin(theta),
 					tag=self.tag_number(),
