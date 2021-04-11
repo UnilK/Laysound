@@ -87,16 +87,16 @@ class RecordPage(tk.Frame):
 	
 	def tag_number(self):
 		
-		number = str(self.parent.ldotCount)
-		self.parent.ldotCount += 1
+		number = str(config.project.ldotCount)
+		config.project.ldotCount += 1
 		while len(number) < 4:
 			number = "0"+number
 		return "#"+number
 
-	def new_ldot_update(self):
+	def new_ldot_update(self, ldot):
 
-		self.timeLine.create_ldot(config.project.ldots[len(config.project.ldots)-1])
-		self.locationTool.create_ldot(config.project.ldots[len(config.project.ldots)-1])
+		self.timeLine.create_ldot(ldot)
+		self.locationTool.create_ldot(ldot)
 		self.timeLine.canvasChanged = True
 		self.locationTool.canvasChanged = True
 	
@@ -277,7 +277,7 @@ class RecordPage(tk.Frame):
 					)
 				)
 		
-		self.new_ldot_update()
+		self.new_ldot_update(config.project.ldots[len(config.project.ldots)-1])
 	
 	def add_sound_source(self):
 
@@ -317,7 +317,7 @@ class RecordPage(tk.Frame):
 						)
 					)
 		
-			self.new_ldot_update()
+			self.new_ldot_update(config.project.ldots[len(config.project.ldots)-1])
 
 		else:
 			pass
@@ -339,4 +339,4 @@ class RecordPage(tk.Frame):
 					)
 				)
 		
-		self.new_ldot_update()
+		self.new_ldot_update(config.project.ldots[len(config.project.ldots)-1])

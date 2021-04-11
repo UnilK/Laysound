@@ -79,12 +79,7 @@ class MainFrame(tk.Frame):
 		tk.Frame.__init__(self, parent, css.grey1Frame, **kwargs)
 		self.parent = parent
 
-		config.project.ldots = []
-		self.ldotCount = 0
-
 		self.title = "Laysound"
-		self.currentName = "untitled_project"
-		self.currentProject = "saves/"+self.currentName+".json"
 
 		self.fileInteraction = FileInteraction(self)
 
@@ -104,7 +99,7 @@ class MainFrame(tk.Frame):
 		self.update_title()
 	
 	def update_title(self):
-		self.parent.title(self.title+" - "+self.currentName)
+		self.parent.title(self.title+" - "+config.project.name)
 
 	def switch_page(self, nextPage):
 

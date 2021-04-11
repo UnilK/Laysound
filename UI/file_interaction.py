@@ -50,10 +50,12 @@ class FileInteraction():
 
 	def	quicksave_project(self):
 		
-		with open(self.parent.currentProject, "w") as file_out:
-			save_list = [copy.copy(ldot.__dict__) for ldot in config.project.ldots]
+		with open(config.project.fileName, "w") as file_out:
 
-			for ldot in save_list:
+			dummyProject = copy.copy(config.project.__dict__)
+			dummyProject["ldots"] = [copy.copy(ldot.__dict__) for ldot in dummyProject["ldots"]]
+
+			for ldot in dummyProject["ldots"]:
 
 				removeList = []
 				for key in ldot:
@@ -63,13 +65,14 @@ class FileInteraction():
 				for key in removeList:
 					ldot.pop(key)
 
-				ldot["bindTimeLine"] = copy.deepcopy(ldot["bindTimeLine"])
+				ldot["bindTimeLine"] = copy.copy(ldot["bindTimeLine"])
 				
 				for i in range(0, len(ldot["bindTimeLine"])):
+					ldot["bindTimeLine"][i] = copy.copy(ldot["bindTimeLine"][i])
 					if ldot["bindTimeLine"][i][2] != None:
 						ldot["bindTimeLine"][i][2] = ldot["bindTimeLine"][i][2].tag
 
-			file_out.write(json.dumps(save_list))
+			file_out.write(json.dumps(dummyProject))
 
 	def	save_project(self):
 		
@@ -77,9 +80,13 @@ class FileInteraction():
 
 		if fileOut:
 			
-			self.parent.currentProject = fileOut+".json"
-			self.parent.currentName = fileOut.split("/")[-1]
+			if not fileOut.endswith(".json"):
+				fileOut += ".json"
+		
+			config.project.fileName = fileOut		
 
+			config.project.name = fileOut.split("/")[-1][0:-5]
+			
 			self.parent.update_title()
 
 		self.quicksave_project()
@@ -89,35 +96,32 @@ class FileInteraction():
 		self.parent.recordPage.unselect_ldot()
 		
 		try:
-			with open(self.parent.currentProject, "r") as file_in:
-				
-				newLdots = [self.ldotTypes[ldot["ldotType"]](**ldot) for ldot in json.load(file_in)]
-				
-				tagToLdot = {}
-				
-				for ldot in newLdots:
-					tagToLdot[ldot.tag] = ldot
+			with open(config.project.fileName, "r") as file_in:
 
-				for ldot in newLdots:
-					for bind in ldot.bindTimeLine:
-						if bind[2] != None:
-							bind[2] = tagToLdot[bind[2]]
-			
-				
 				for ldot in config.project.ldots:
 					self.parent.recordPage.locationTool.delete_ldot(ldot)
 					self.parent.recordPage.timeLine.delete_ldot(ldot)
 				
-				config.project.ldots = []
-
-				for ldot in newLdots:
-					config.project.ldots.append(ldot)
-					self.parent.recordPage.new_ldot_update()
-
-				self.parent.ldotCount = 0
+				config.project = config.Project(**json.load(file_in))
+				
+				config.project.ldots = [
+						self.ldotTypes[
+							ldot["ldotType"]](**ldot) for ldot in config.project.ldots
+						]
+				
+				tagToLdot = {}
+				
+				for ldot in config.project.ldots:
+					tagToLdot[ldot.tag] = ldot
 
 				for ldot in config.project.ldots:
-					self.parent.ldotCount = max(self.parent.ldotCount, int(ldot.tag[1:])+1)
+					for bind in ldot.bindTimeLine:
+						if bind[2] != None:
+							bind[2] = tagToLdot[bind[2]]
+			
+				for ldot in config.project.ldots:
+					self.parent.recordPage.new_ldot_update(ldot)
+
 		
 		except FileNotFoundError:
 			pass
@@ -130,11 +134,11 @@ class FileInteraction():
 
 		if fileIn:
 			
-			self.parent.currentProject = fileIn
-			self.parent.currentName = fileIn.split("/")[-1]
+			config.project.fileName = fileIn
+			config.project.name = fileIn.split("/")[-1]
 
-			if self.parent.currentName.endswith(".json"):
-				self.parent.currentName = self.parent.currentName[:-5]
+			if config.project.name.endswith(".json"):
+				config.project.name = config.project.name[0:-5]
 
 			self.parent.update_title()
 
@@ -148,8 +152,8 @@ class FileInteraction():
 		process = subprocess.run(
 				[
 					"./lsapi", 
-					"render","instructions/"+self.parent.currentName+".dsi",
-					"-o", "renders/"+self.parent.currentName+".wav"
+					"render","instructions/"+config.project.name+".dsi",
+					"-o", "renders/"+config.project.name+".wav"
 				],
 				capture_output=True
 				)
@@ -164,6 +168,9 @@ class FileInteraction():
 
 	def render_project(self):
 
+		process = subprocess.run(["rm", "renders/*dsi"])
+		process = subprocess.run(["rm", "renders/*dsd"])
+		
 		listeners = []
 		sources = []
 
@@ -197,7 +204,7 @@ class FileInteraction():
 				for nums in source.absoluteLocation:
 					file_in.write(str(nums[0])+" "+str(nums[1])+" "+str(nums[2])+"\n")
 		
-		with open("instructions/"+self.parent.currentName+".dsi", "w") as file_in:
+		with open("instructions/"+config.project.name+".dsi", "w") as file_in:
 			
 			file_in.write(str(len(listeners))+" "+str(len(sources))+"\n")
 
