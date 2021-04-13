@@ -199,16 +199,19 @@ class LocationData():
 		self.set_relative_location(timestamp, nx, ny)
 
 
-class StaticPoint(LocationData):
+class StaticRoute(LocationData):
 	def __init__(self, **kwargs):
 		LocationData.__init__(self, **kwargs)
 
 		self.ldotType = "static"
+		
+		self.normalStyle = css.staticRouteNormal
+		self.selectedStyle = css.selectedStyle
+		self.barTextStyle = css.staticRouteBarTextStyle
 
 		self.initialize_route()
 
 	def initialize_route(self, begin=None, end=None):
-		
 		if begin == None:
 			if self.length < len(self.absoluteLocation):
 				self.absoluteLocation = self.absoluteLocation[:self.length]
@@ -218,8 +221,6 @@ class StaticPoint(LocationData):
 	def set_relative_location(self, timestamp, x, y):
 		self.relativeLocation[0][0] = x
 		self.relativeLocation[0][1] = y
-
-
 
 class FreeRoute(LocationData):
 	def __init__(self, **kwargs):

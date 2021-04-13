@@ -38,6 +38,7 @@ class ToolBar(tk.Frame):
 		self.upperFrameHeight = 200
 	
 		self.toolboxes = {
+				"static": ToolboxStatic,
 				"free": ToolboxFree,
 				"listener": ToolboxListener,
 				"source": ToolboxSource
@@ -75,6 +76,29 @@ class ToolBar(tk.Frame):
 		self.upperFrame.grid(column=1, row=0, sticky="news")
 		self.middleBorder.grid(column=1, row=1, sticky="news")
 		
+		self.switchTimeFlowButton = tk.Button(
+				self.upperFrame,
+				css.grey1Button,
+				text="Start",
+				command=self.parent.switch_time_flow
+				)
+
+		self.switchRecordButton = tk.Button(
+				self.upperFrame,
+				css.grey1Button,
+				text="Record",
+				command=self.parent.switch_record
+				)
+
+
+
+		self.addStaticRouteButton = tk.Button(
+				self.upperFrame,
+				css.grey1Button,
+				text="Static",
+				command=self.parent.add_static_route
+				)
+
 		self.addFreeRouteButton = tk.Button(
 				self.upperFrame,
 				css.grey1Button,
@@ -96,25 +120,13 @@ class ToolBar(tk.Frame):
 				command=self.parent.add_listener
 				)
 
-		self.switchTimeFlowButton = tk.Button(
-				self.upperFrame,
-				css.grey1Button,
-				text="Start",
-				command=self.parent.switch_time_flow
-				)
+		self.switchTimeFlowButton.grid(column=0, row=1, sticky="nwse")
+		self.switchRecordButton.grid(column=0, row=2, sticky="nwes")
 
-		self.switchRecordButton = tk.Button(
-				self.upperFrame,
-				css.grey1Button,
-				text="Record",
-				command=self.parent.switch_record
-				)
-
-		self.addFreeRouteButton.grid(column=0, row=0, sticky="nwes")
-		self.addSoundSourceButton.grid(column=0, row=1, sticky="nwes")
-		self.addListenerButton.grid(column=0, row=2, sticky="nwes")
-		self.switchTimeFlowButton.grid(column=0, row=3, sticky="nwse")
-		self.switchRecordButton.grid(column=0, row=4, sticky="nwes")
+		self.addStaticRouteButton.grid(column=0, row=5, sticky="nwes")
+		self.addFreeRouteButton.grid(column=0, row=6, sticky="nwes")
+		self.addSoundSourceButton.grid(column=0, row=7, sticky="nwes")
+		self.addListenerButton.grid(column=0, row=8, sticky="nwes")
 
 	######################### Utility functions ################################
 
@@ -567,10 +579,19 @@ class BindBox(tk.Frame):
 			pass
 
 
+
+class ToolboxStatic(ToolboxTemplate):
+
+	def __init__(self, parent, ldot, **kwargs):
+		ToolboxTemplate.__init__(self, parent, ldot, **kwargs)
+
+
+
 class ToolboxFree(ToolboxTemplate):
 
 	def __init__(self, parent, ldot, **kwargs):
 		ToolboxTemplate.__init__(self, parent, ldot, **kwargs)
+
 
 
 class ToolboxListener(ToolboxTemplate):

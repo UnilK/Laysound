@@ -122,6 +122,19 @@ freeRouteBarTextStyle = {
 		"fill": "#696"
 		}
 
+staticRouteNormal = {
+		"width": 3,
+		"fill": "#b5a569",
+		"outline": "#958549",
+		"activefill": "#c5b579",
+		"activeoutline": "#a59559"
+		}
+
+staticRouteBarTextStyle = {
+		"font": helvetica14,
+		"fill": "#958549"
+		}
+
 soundSourceNormal = {
 		"width": 3,
 		"fill": "#ccc",

@@ -261,6 +261,24 @@ class RecordPage(tk.Frame):
 
 			self.locationTool.canvasChanged = True
 	
+	def add_static_route(self):
+
+		theta = 2*math.pi*random.random()
+
+		config.project.ldots.append(
+				StaticRoute(
+					beginTime=self.timestamp,
+					endTime=self.timestamp+config.project.frameRate,
+					xpos=math.cos(theta),
+					ypos=math.sin(theta),
+					tag=self.tag_number(),
+					slot=random.randint(0, 4),
+					bind=self.selectedLdot
+					)
+				)
+		
+		self.new_ldot_update(config.project.ldots[len(config.project.ldots)-1])
+	
 	def add_free_route(self):
 
 		theta = 2*math.pi*random.random()
@@ -268,7 +286,7 @@ class RecordPage(tk.Frame):
 		config.project.ldots.append(
 				FreeRoute(
 					beginTime=self.timestamp,
-					endTime=self.timestamp+config.project.frameRate*10,
+					endTime=self.timestamp+config.project.frameRate,
 					xpos=math.cos(theta),
 					ypos=math.sin(theta),
 					tag=self.tag_number(),
