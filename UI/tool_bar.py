@@ -35,12 +35,13 @@ class ToolBar(tk.Frame):
 		self.boxSizeChanged = False
 		self.middleB1State = False
 		self.middleMousePosition = []
-		self.upperFrameHeight = 200
+		self.upperFrameHeight = 280
 	
 		self.toolboxes = {
 				"static": ToolboxStatic,
 				"free": ToolboxFree,
 				"circle": ToolboxCircle,
+				"straight": ToolboxStraight,
 				"listener": ToolboxListener,
 				"source": ToolboxSource
 				}
@@ -110,8 +111,15 @@ class ToolBar(tk.Frame):
 		self.addCircleRouteButton = tk.Button(
 				self.upperFrame,
 				css.grey1Button,
-				text="Circle",
+				text="Circlular",
 				command=self.parent.add_circle_route
+				)
+		
+		self.addStraightRouteButton = tk.Button(
+				self.upperFrame,
+				css.grey1Button,
+				text="Straight",
+				command=self.parent.add_straight_route
 				)
 
 		self.addSoundSourceButton = tk.Button(
@@ -134,8 +142,9 @@ class ToolBar(tk.Frame):
 		self.addStaticRouteButton.grid(column=0, row=5, sticky="nwes")
 		self.addFreeRouteButton.grid(column=0, row=6, sticky="nwes")
 		self.addCircleRouteButton.grid(column=0, row=7, sticky="nwes")
-		self.addSoundSourceButton.grid(column=0, row=8, sticky="nwes")
-		self.addListenerButton.grid(column=0, row=9, sticky="nwes")
+		self.addStraightRouteButton.grid(column=0, row=8, sticky="nwes")
+		self.addSoundSourceButton.grid(column=0, row=9, sticky="nwes")
+		self.addListenerButton.grid(column=0, row=10, sticky="nwes")
 
 	######################### Utility functions ################################
 
@@ -604,6 +613,13 @@ class ToolboxFree(ToolboxTemplate):
 
 
 class ToolboxCircle(ToolboxTemplate):
+
+	def __init__(self, parent, ldot, **kwargs):
+		ToolboxTemplate.__init__(self, parent, ldot, **kwargs)
+
+
+
+class ToolboxStraight(ToolboxTemplate):
 
 	def __init__(self, parent, ldot, **kwargs):
 		ToolboxTemplate.__init__(self, parent, ldot, **kwargs)

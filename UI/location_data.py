@@ -269,6 +269,9 @@ class CircleRoute(LocationData):
 
 		self.initialize_route()
 
+	def set_relative_rotation(self, timestamp, r):
+		pass
+
 	def initialize_route(self, begin=None, end=None):
 		
 		if begin == None:
@@ -309,7 +312,7 @@ class CircleRoute(LocationData):
 
 
 class StraightRoute(LocationData):
-	def __init__(self, **kwargs):
+	def __init__(self, direction=0, speed=1, **kwargs):
 		LocationData.__init__(self, **kwargs)
 		
 		self.ldotType = "straight"
@@ -317,26 +320,47 @@ class StraightRoute(LocationData):
 		self.normalStyle = css.straightRouteNormal
 		self.selectedStyle = css.selectedStyle
 		self.barTextStyle = css.straightRouteBarTextStyle
+		
+		self.direction = direction
+		self.speed = speed
 
 		self.initialize_route()
+
+	def set_relative_rotation(self, timestamp, r):
+		pass
 
 	def initialize_route(self, begin=None, end=None):
 		
 		if begin == None:
 			
 			if self.length < len(self.absoluteLocation):
-				self.relativeLocation = self.relativeLocation[:self.length]
 				self.absoluteLocation = self.absoluteLocation[:self.length]
 
 			while(len(self.absoluteLocation) < self.length):
-				self.relativeLocation.append(self.relativeLocation[-1].copy())
 				self.absoluteLocation.append(self.absoluteLocation[-1].copy())
 
-	def set_relative_location(self, timestamp, x, y):
-		relativeTime = max(0, min(timestamp-self.beginTime, len(self.relativeLocation)-1))
-		self.relativeLocation[relativeTime][0] = x
-		self.relativeLocation[relativeTime][1] = y
+	def get_relative(self, timestamp):
+		relativeTime = max(0, min(timestamp-self.beginTime, len(self.absoluteLocation)-1))
+		return 	[
+				math.cos(math.pi*self.direction)*self.speed*relativeTime/config.project.frameRate,
+				math.sin(math.pi*self.direction)*self.speed*relativeTime/config.project.frameRate,
+				0
+				]
 
+	def set_relative_location(self, timestamp, x, y):
+		relativeTime = max(0, min(timestamp-self.beginTime, len(self.absoluteLocation)-1))
+		
+		if(relativeTime == 0):
+			return
+
+		if(x == 0):
+			x = 1e-9
+	
+		self.speed = (math.sqrt(x*x+y*y)*config.project.frameRate)/relativeTime
+		self.direction = (math.atan(y/x)/math.pi)
+		
+		if(x < 0):
+			self.direction += 1
 
 
 class SoundSource(LocationData):

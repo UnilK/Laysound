@@ -137,28 +137,28 @@ staticRouteBarTextStyle = {
 
 circleRouteNormal = {
 		"width": 3,
-		"fill": "#ba9",
-		"outline": "#876",
-		"activefill": "#cc9",
-		"activeoutline": "#996"
+		"fill": "#b97",
+		"outline": "#864",
+		"activefill": "#ca8",
+		"activeoutline": "#975"
 		}
 
 circleRouteBarTextStyle = {
 		"font": helvetica14,
-		"fill": "#885"
+		"fill": "#864"
 		}
 
 straightRouteNormal = {
 		"width": 3,
-		"fill": "#b99",
-		"outline": "#866",
-		"activefill": "#cc9",
-		"activeoutline": "#996"
+		"fill": "#b77",
+		"outline": "#844",
+		"activefill": "#c88",
+		"activeoutline": "#955"
 		}
 
 straightRouteBarTextStyle = {
 		"font": helvetica14,
-		"fill": "#885"
+		"fill": "#844"
 		}
 
 soundSourceNormal = {

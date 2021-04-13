@@ -19,7 +19,10 @@ class FileInteraction():
 		self.parent = parent
 
 		self.ldotTypes = {
+				"static": StaticRoute,
 				"free": FreeRoute,
+				"circle": CircleRoute,
+				"straight": StraightRoute,
 				"listener": Listener,
 				"source": SoundSource
 				}
@@ -42,7 +45,12 @@ class FileInteraction():
 				"bindTimeLine": True,
 				"sourceInfo": True,
 				"channel": True,
-				"damperProfile": True
+				"damperProfile": True,
+				"radius": True,
+				"rotation": True,
+				"rotationSpeed": True,
+				"direction": True,
+				"speed": True
 				}
 		
 		self.renderThread = threading.Thread(target=self.render_on_thread)
