@@ -297,6 +297,27 @@ class RecordPage(tk.Frame):
 		
 		self.new_ldot_update(config.project.ldots[len(config.project.ldots)-1])
 	
+	def add_circle_route(self):
+
+		theta = 2*math.pi*random.random()
+
+		config.project.ldots.append(
+				CircleRoute(
+					beginTime=self.timestamp,
+					endTime=self.timestamp+config.project.frameRate,
+					xpos=math.cos(theta),
+					ypos=math.sin(theta),
+					tag=self.tag_number(),
+					slot=random.randint(0, 4),
+					bind=self.selectedLdot,
+					radius=1,
+					rotation=theta,
+					rotationSpeed=2
+					)
+				)
+		
+		self.new_ldot_update(config.project.ldots[len(config.project.ldots)-1])
+	
 	def add_sound_source(self):
 
 		fileIn = filedialog.askopenfilename(title="select source file", initialdir="audio")

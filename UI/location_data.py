@@ -254,10 +254,58 @@ class FreeRoute(LocationData):
 
 
 class CircleRoute(LocationData):
-	def __init__(self, **kwargs):
+	def __init__(self, radius=1, rotation=0, rotationSpeed=1, **kwargs):
 		LocationData.__init__(self, **kwargs)
 
 		self.ldotType = "circle"
+		
+		self.normalStyle = css.circleRouteNormal
+		self.selectedStyle = css.selectedStyle
+		self.barTextStyle = css.circleRouteBarTextStyle
+
+		self.radius = radius
+		self.rotation = rotation
+		self.rotationSpeed = rotationSpeed
+
+		self.initialize_route()
+
+	def initialize_route(self, begin=None, end=None):
+		
+		if begin == None:
+			
+			if self.length < len(self.absoluteLocation):
+				self.absoluteLocation = self.absoluteLocation[:self.length]
+
+			while(len(self.absoluteLocation) < self.length):
+				self.absoluteLocation.append(self.absoluteLocation[-1].copy())
+
+	def get_relative(self, timestamp):
+		relativeTime = max(0, min(timestamp-self.beginTime, len(self.absoluteLocation)-1))
+		return 	[
+				self.radius*math.cos(
+					math.pi*(self.rotation
+							+(self.rotationSpeed*relativeTime)/config.project.frameRate)),
+				self.radius*math.sin(
+					math.pi*(self.rotation
+							+(self.rotationSpeed*relativeTime)/config.project.frameRate)),
+				0
+				]
+
+	def set_relative_location(self, timestamp, x, y):
+		relativeTime = max(0, min(timestamp-self.beginTime, len(self.absoluteLocation)-1))
+			
+		self.radius = math.sqrt(x*x+y*y)
+		
+		if(x == 0):
+			x = 1e-9
+	
+		self.rotation = (math.atan(y/x)/math.pi
+				-self.rotationSpeed*relativeTime/config.project.frameRate)
+		
+		if(x < 0):
+			self.rotation += 1
+
+
 
 
 class StraightRoute(LocationData):
@@ -265,6 +313,30 @@ class StraightRoute(LocationData):
 		LocationData.__init__(self, **kwargs)
 		
 		self.ldotType = "straight"
+		
+		self.normalStyle = css.straightRouteNormal
+		self.selectedStyle = css.selectedStyle
+		self.barTextStyle = css.straightRouteBarTextStyle
+
+		self.initialize_route()
+
+	def initialize_route(self, begin=None, end=None):
+		
+		if begin == None:
+			
+			if self.length < len(self.absoluteLocation):
+				self.relativeLocation = self.relativeLocation[:self.length]
+				self.absoluteLocation = self.absoluteLocation[:self.length]
+
+			while(len(self.absoluteLocation) < self.length):
+				self.relativeLocation.append(self.relativeLocation[-1].copy())
+				self.absoluteLocation.append(self.absoluteLocation[-1].copy())
+
+	def set_relative_location(self, timestamp, x, y):
+		relativeTime = max(0, min(timestamp-self.beginTime, len(self.relativeLocation)-1))
+		self.relativeLocation[relativeTime][0] = x
+		self.relativeLocation[relativeTime][1] = y
+
 
 
 class SoundSource(LocationData):

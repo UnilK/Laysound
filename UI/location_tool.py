@@ -352,36 +352,23 @@ class LocationTool(tk.Frame):
 
 				if self.parent.timeFlow:
 					self.parent.selectedLdot.set_relative_location(
-							time, 
-							x0+self.ldotMove[0],
-							y0-self.ldotMove[1]
-							)
+							time, x0+self.ldotMove[0], y0-self.ldotMove[1])
 					
 					self.parent.selectedLdot.set_relative_rotation(
-							time, 
-							r0+self.ldotRotate
-							)
+							time, r0+self.ldotRotate)
+
 				else:
 					self.parent.selectedLdot.set_relative_location(
-							time, 
-							x1+self.ldotMove[0],
-							y1-self.ldotMove[1]
-							)
+							time, x1+self.ldotMove[0], y1-self.ldotMove[1])
+
 					self.parent.selectedLdot.set_relative_rotation(
-							time, 
-							r1+self.ldotRotate
-							)
+							time, r1+self.ldotRotate)
 				
 				self.parent.toolBar.positionChanged = True
 
-				if self.parent.timeFlow:
-					self.ldotMove[0] /= 2;
-					self.ldotMove[1] /= 2;
-					self.ldotRotate /= 2;
-				else:
-					self.ldotMove[0] = 0;
-					self.ldotMove[1] = 0;
-					self.ldotRotate = 0
+				self.ldotMove[0] = 0;
+				self.ldotMove[1] = 0;
+				self.ldotRotate = 0
 
 		visited = {}
 

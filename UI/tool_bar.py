@@ -40,6 +40,7 @@ class ToolBar(tk.Frame):
 		self.toolboxes = {
 				"static": ToolboxStatic,
 				"free": ToolboxFree,
+				"circle": ToolboxCircle,
 				"listener": ToolboxListener,
 				"source": ToolboxSource
 				}
@@ -105,6 +106,13 @@ class ToolBar(tk.Frame):
 				text="Freehand",
 				command=self.parent.add_free_route
 				)
+		
+		self.addCircleRouteButton = tk.Button(
+				self.upperFrame,
+				css.grey1Button,
+				text="Circle",
+				command=self.parent.add_circle_route
+				)
 
 		self.addSoundSourceButton = tk.Button(
 				self.upperFrame,
@@ -125,8 +133,9 @@ class ToolBar(tk.Frame):
 
 		self.addStaticRouteButton.grid(column=0, row=5, sticky="nwes")
 		self.addFreeRouteButton.grid(column=0, row=6, sticky="nwes")
-		self.addSoundSourceButton.grid(column=0, row=7, sticky="nwes")
-		self.addListenerButton.grid(column=0, row=8, sticky="nwes")
+		self.addCircleRouteButton.grid(column=0, row=7, sticky="nwes")
+		self.addSoundSourceButton.grid(column=0, row=8, sticky="nwes")
+		self.addListenerButton.grid(column=0, row=9, sticky="nwes")
 
 	######################### Utility functions ################################
 
@@ -588,6 +597,13 @@ class ToolboxStatic(ToolboxTemplate):
 
 
 class ToolboxFree(ToolboxTemplate):
+
+	def __init__(self, parent, ldot, **kwargs):
+		ToolboxTemplate.__init__(self, parent, ldot, **kwargs)
+
+
+
+class ToolboxCircle(ToolboxTemplate):
 
 	def __init__(self, parent, ldot, **kwargs):
 		ToolboxTemplate.__init__(self, parent, ldot, **kwargs)

@@ -99,40 +99,66 @@ defaultBarTextStyle = {
 selectedStyle = {
 		"width": 3,
 		"fill": "#99b",
-		"outline": "#669",
+		"outline": "#668",
 		"activefill": "#aac",
-		"activeoutline": "#77a"
+		"activeoutline": "#779"
 		}
 
 selectedBarTextStyle = {
 		"font": helvetica14,
-		"fill": "#669"
+		"fill": "#668"
 		}
 
 freeRouteNormal = {
 		"width": 3,
 		"fill": "#9b9",
-		"outline": "#696",
+		"outline": "#686",
 		"activefill": "#aca",
-		"activeoutline": "#7a7"
+		"activeoutline": "#797"
 		}
 
 freeRouteBarTextStyle = {
 		"font": helvetica14,
-		"fill": "#696"
+		"fill": "#686"
 		}
 
 staticRouteNormal = {
 		"width": 3,
-		"fill": "#b5a569",
-		"outline": "#958549",
-		"activefill": "#c5b579",
-		"activeoutline": "#a59559"
+		"fill": "#bb8",
+		"outline": "#885",
+		"activefill": "#cc9",
+		"activeoutline": "#996"
 		}
 
 staticRouteBarTextStyle = {
 		"font": helvetica14,
-		"fill": "#958549"
+		"fill": "#885"
+		}
+
+circleRouteNormal = {
+		"width": 3,
+		"fill": "#ba9",
+		"outline": "#876",
+		"activefill": "#cc9",
+		"activeoutline": "#996"
+		}
+
+circleRouteBarTextStyle = {
+		"font": helvetica14,
+		"fill": "#885"
+		}
+
+straightRouteNormal = {
+		"width": 3,
+		"fill": "#b99",
+		"outline": "#866",
+		"activefill": "#cc9",
+		"activeoutline": "#996"
+		}
+
+straightRouteBarTextStyle = {
+		"font": helvetica14,
+		"fill": "#885"
 		}
 
 soundSourceNormal = {
