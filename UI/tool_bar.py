@@ -192,6 +192,12 @@ class ToolBar(tk.Frame):
 			if "straightconfig" in flags:
 				self.toolbox.set_config()
 
+			if "settime" in flags:
+				self.toolbox.set_time()
+
+			if "setposition" in flags:
+				self.toolbox.set_position()
+
 
 	def toolbox_position_update(self):
 		if self.toolbox != None:
@@ -323,6 +329,11 @@ class ToolboxTemplate(tk.Frame):
 		self.endEntry.grid(row=2, column=1, padx=4, pady=4, sticky="nw")
 		self.setTimeButton.grid(row=3, column=0, padx=4, pady=4, sticky="nw")
 		
+		self.beginEntry.bind("<Key>",
+				lambda x: self.parent.entry_key_action(event=x, flags=["settime"]))
+		self.endEntry.bind("<Key>",
+				lambda x: self.parent.entry_key_action(event=x, flags=["settime"]))
+		
 		self.xVar = tk.DoubleVar(self)
 		self.yVar = tk.DoubleVar(self)
 		self.rotationVar = tk.DoubleVar(self)
@@ -377,6 +388,13 @@ class ToolboxTemplate(tk.Frame):
 		self.rotationLabel.grid(row=6, column=0, padx=4, pady=4, sticky="nw")
 		self.rotationEntry.grid(row=6, column=1, padx=4, pady=4, sticky="nw")
 		self.setPositionButton.grid(row=7, column=0, padx=4, pady=4, sticky="nw")
+		
+		self.xEntry.bind("<Key>",
+				lambda x: self.parent.entry_key_action(event=x, flags=["setposition"]))
+		self.yEntry.bind("<Key>",
+				lambda x: self.parent.entry_key_action(event=x, flags=["setposition"]))	
+		self.rotationEntry.bind("<Key>",
+				lambda x: self.parent.entry_key_action(event=x, flags=["setposition"]))
 		
 		self.bindLabel = tk.Label(
 				self.toolBox,
