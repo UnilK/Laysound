@@ -191,6 +191,9 @@ class ToolBar(tk.Frame):
 
 			if "straightconfig" in flags:
 				self.toolbox.set_config()
+			
+			if "circleconfig" in flags:
+				self.toolbox.set_config()
 
 			if "settime" in flags:
 				self.toolbox.set_time()
@@ -637,6 +640,88 @@ class ToolboxCircle(ToolboxTemplate):
 
 	def __init__(self, parent, ldot, **kwargs):
 		ToolboxTemplate.__init__(self, parent, ldot, **kwargs)
+
+		self.radiusVar = tk.StringVar(self)
+		self.angleVar = tk.StringVar(self)
+		self.rotationSpeedVar = tk.StringVar(self)
+
+		self.radiusVar.set(self.ldot.radius)
+		self.angleVar.set(self.ldot.rotation)
+		self.rotationSpeedVar.set(self.ldot.rotationSpeed)
+
+		self.radiusLabel = tk.Label(
+				self.toolBox,
+				css.grey1Label,
+				text="radius:"
+				)
+
+		self.radiusEntry = tk.Entry(
+				self.toolBox,
+				css.entryStyle,
+				textvariable=self.radiusVar
+				)
+		
+		self.angleLabel = tk.Label(
+				self.toolBox,
+				css.grey1Label,
+				text="initial angle:"
+				)
+
+		self.angleEntry = tk.Entry(
+				self.toolBox,
+				css.entryStyle,
+				textvariable=self.angleVar
+				)
+		
+		self.rotationSpeedLabel = tk.Label(
+				self.toolBox,
+				css.grey1Label,
+				text="speed:"
+				)
+
+		self.rotationSpeedEntry = tk.Entry(
+				self.toolBox,
+				css.entryStyle,
+				textvariable=self.rotationSpeedVar
+				)
+		
+		self.radiusEntry.bind("<Key>",
+				lambda x: self.parent.entry_key_action(event=x, flags=["circleconfig"]))
+		self.angleEntry.bind("<Key>",
+				lambda x: self.parent.entry_key_action(event=x, flags=["circleconfig"]))
+		self.rotationSpeedEntry.bind("<Key>",
+				lambda x: self.parent.entry_key_action(event=x, flags=["circleconfig"]))
+		
+		self.radiusLabel.grid(row=10, column=0, padx=4, pady=4, sticky="nw")
+		self.radiusEntry.grid(row=10, column=1, padx=4, pady=4, sticky="nw")
+		self.angleLabel.grid(row=11, column=0, padx=4, pady=4, sticky="nw")
+		self.angleEntry.grid(row=11, column=1, padx=4, pady=4, sticky="nw")
+		self.rotationSpeedLabel.grid(row=12, column=0, padx=4, pady=4, sticky="nw")
+		self.rotationSpeedEntry.grid(row=12, column=1, padx=4, pady=4, sticky="nw")
+
+	def set_config(self):
+		
+		try:
+			self.ldot.set_config(radius=float(self.radiusVar.get()))
+		except ValueError:
+			pass
+		
+		try:
+			self.ldot.set_config(rotation=float(self.angleVar.get()))
+		except ValueError:
+			pass
+		
+		try:
+			self.ldot.set_config(rotationSpeed=float(self.rotationSpeedVar.get()))
+		except ValueError:
+			pass
+		
+		self.radiusVar.set(self.ldot.radius)
+		self.angleVar.set(self.ldot.rotation)
+		self.rotationSpeedVar.set(self.ldot.rotationSpeed)
+
+		self.parent.positionChanged = True
+		self.recordPage.locationTool.canvasChanged = True
 
 
 

@@ -299,14 +299,14 @@ class RecordPage(tk.Frame):
 	
 	def add_circle_route(self):
 
-		theta = 2*math.pi*random.random()
+		theta = 2*random.random()
 
 		config.project.ldots.append(
 				CircleRoute(
 					beginTime=self.timestamp,
 					endTime=self.timestamp+config.project.frameRate,
-					xpos=math.cos(theta),
-					ypos=math.sin(theta),
+					xpos=math.cos(theta*math.pi),
+					ypos=math.sin(theta*math.pi),
 					tag=self.tag_number(),
 					slot=random.randint(0, 4),
 					bind=self.selectedLdot,
@@ -320,14 +320,14 @@ class RecordPage(tk.Frame):
 	
 	def add_straight_route(self):
 
-		theta = 2*math.pi*random.random()
+		theta = 2*random.random()
 
 		config.project.ldots.append(
 				StraightRoute(
 					beginTime=self.timestamp,
 					endTime=self.timestamp+config.project.frameRate,
-					xpos=math.cos(theta),
-					ypos=math.sin(theta),
+					xpos=math.cos(theta*math.pi),
+					ypos=math.sin(theta*math.pi),
 					tag=self.tag_number(),
 					slot=random.randint(0, 4),
 					bind=self.selectedLdot,

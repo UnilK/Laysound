@@ -269,11 +269,14 @@ class CircleRoute(LocationData):
 
 		self.initialize_route()
 	
-	def set_config(radius=None, rotation=None):
+	def set_config(self, radius=None, rotation=None, rotationSpeed=None):
 		if radius != None:
 			self.radius = radius
 		if rotation != None:
 			self.rotation = rotation
+		if rotationSpeed != None:
+			self.rotationSpeed = rotationSpeed
+
 
 	def set_relative_rotation(self, timestamp, r):
 		pass
