@@ -189,6 +189,9 @@ class ToolBar(tk.Frame):
 			if "brushconfig" in flags:
 				self.toolbox.change_brush()
 
+			if "straightconfig" in flags:
+				self.toolbox.set_config()
+
 
 	def toolbox_position_update(self):
 		if self.toolbox != None:
@@ -623,6 +626,64 @@ class ToolboxStraight(ToolboxTemplate):
 
 	def __init__(self, parent, ldot, **kwargs):
 		ToolboxTemplate.__init__(self, parent, ldot, **kwargs)
+		
+		self.directionVar = tk.StringVar(self)
+		self.speedVar = tk.StringVar(self)
+
+		self.directionVar.set(self.ldot.direction)
+		self.speedVar.set(self.ldot.speed)
+
+		self.directionLabel = tk.Label(
+				self.toolBox,
+				css.grey1Label,
+				text="direction:"
+				)
+
+		self.directionEntry = tk.Entry(
+				self.toolBox,
+				css.entryStyle,
+				textvariable=self.directionVar
+				)
+		
+		self.speedLabel = tk.Label(
+				self.toolBox,
+				css.grey1Label,
+				text="speed:"
+				)
+
+		self.speedEntry = tk.Entry(
+				self.toolBox,
+				css.entryStyle,
+				textvariable=self.speedVar
+				)
+		
+		self.directionEntry.bind("<Key>",
+				lambda x: self.parent.entry_key_action(event=x, flags=["straightconfig"]))
+		self.speedEntry.bind("<Key>",
+				lambda x: self.parent.entry_key_action(event=x, flags=["straightconfig"]))
+		
+		self.directionLabel.grid(row=10, column=0, padx=4, pady=4, sticky="nw")
+		self.directionEntry.grid(row=10, column=1, padx=4, pady=4, sticky="nw")
+		self.speedLabel.grid(row=11, column=0, padx=4, pady=4, sticky="nw")
+		self.speedEntry.grid(row=11, column=1, padx=4, pady=4, sticky="nw")
+
+	def set_config(self):
+		
+		try:
+			self.ldot.set_config(direction=float(self.directionVar.get()))
+		except ValueError:
+			pass
+		
+		try:
+			self.ldot.set_config(speed=float(self.speedVar.get()))
+		except ValueError:
+			pass
+		
+		self.directionVar.set(self.ldot.direction)
+		self.speedVar.set(self.ldot.speed)
+		
+		self.parent.positionChanged = True
+		self.recordPage.locationTool.canvasChanged = True
 
 
 
@@ -707,22 +768,26 @@ class ToolboxListener(ToolboxTemplate):
 		self.brushPowerSpin.bind("<Key>",
 				lambda x: self.parent.entry_key_action(event=x, flags=["brushconfig"]))
 		
+		self.profileButtonFrame = tk.Frame(self.toolBox, css.grey1Frame)
+		self.profileButtonFrame.grid_columnconfigure(5, weight=1)
+		self.profileButtonFrame.grid_rowconfigure(1, weight=1)
+
 		self.loadProfileButton = tk.Button(
-				self.toolBox,
+				self.profileButtonFrame,
 				css.grey1Button,
 				text="load",
 				command=self.load_profile
 				)
 		
 		self.saveProfileButton = tk.Button(
-				self.toolBox,
+				self.profileButtonFrame,
 				css.grey1Button,
 				text="save",
 				command=self.save_profile
 				)
 		
 		self.mirrorProfileButton = tk.Button(
-				self.toolBox,
+				self.profileButtonFrame,
 				css.grey1Button,
 				text="mirror",
 				command=self.mirror_profile
@@ -757,9 +822,10 @@ class ToolboxListener(ToolboxTemplate):
 		self.brushPowerLabel.grid(row=14, column=0, padx=4, pady=4, sticky="nw")
 		self.brushPowerSpin.grid(row=14, column=1, padx=4, pady=4, sticky="nw")
 		
-		self.saveProfileButton.grid(row=15, column=0, padx=4, pady=4, sticky="nw")
-		self.loadProfileButton.grid(row=15, column=1, padx=4, pady=4, sticky="nw")
-		self.mirrorProfileButton.grid(row=16, column=0, padx=4, pady=4, sticky="nw")
+		self.profileButtonFrame.grid(row=15, column=0, columnspan=5, sticky="news")
+		self.saveProfileButton.grid(row=0, column=0, padx=4, pady=4, sticky="nw")
+		self.loadProfileButton.grid(row=0, column=1, padx=4, pady=4, sticky="nw")
+		self.mirrorProfileButton.grid(row=0, column=2, padx=4, pady=4, sticky="nw")
 
 		self.damperCanvas.grid(row=17, column=0, columnspan=2, padx=4, pady=4, sticky="nw")
 

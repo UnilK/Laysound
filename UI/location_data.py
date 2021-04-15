@@ -268,6 +268,12 @@ class CircleRoute(LocationData):
 		self.rotationSpeed = rotationSpeed
 
 		self.initialize_route()
+	
+	def set_config(radius=None, rotation=None):
+		if radius != None:
+			self.radius = radius
+		if rotation != None:
+			self.rotation = rotation
 
 	def set_relative_rotation(self, timestamp, r):
 		pass
@@ -325,6 +331,12 @@ class StraightRoute(LocationData):
 		self.speed = speed
 
 		self.initialize_route()
+
+	def set_config(self, speed=None, direction=None):
+		if speed != None:
+			self.speed = speed
+		if direction != None:
+			self.direction = direction
 
 	def set_relative_rotation(self, timestamp, r):
 		pass
