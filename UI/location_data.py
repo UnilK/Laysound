@@ -10,6 +10,32 @@ import UI.canvas_styles as css
 import UI.config as config
 
 class LocationData():
+	
+	"""
+	Template class for capturing motion
+
+	How location data objects or, "ldots" work:
+
+	each ldot has a list, absoluteLocation,
+	describing its location relative to the origin
+	at some timestamp. beginTime and endTime control
+	where in the timeline this segment exists.
+
+	each ldot also has some method of describing
+	it's location relative to the ldot (or origin) it's bound to.
+	get_relative_location and set_relative_location implement this.
+
+	location and orientation are described as a list of 3 numbers:
+	
+	x, x-coordinate
+	y, y-coordinate
+	r, rotation, the corresponding point on the unit circle is (cos(r*pi), sin(r*pi))
+	
+	each ldot also keeps track of what it is bound to with bindTimeLine
+
+	both the location and the orientation translate over when
+	ldots are "binded", see render_point function for the implementation.
+	"""
 
 	def __init__(
 			self, beginTime, endTime, tag, xpos=0, ypos=0, slot=0, bind=None, isHidden=False,
@@ -68,7 +94,16 @@ class LocationData():
 		return left
 
 	def priority(self, timestamp, visited):
-		
+
+		"""
+		If an ldot is binded to some other ldot,
+		then that ldot should be rendered first.
+
+		see the render function in location_tool
+
+		this function calculates the render priority
+		"""
+
 		if self.tag in visited:
 			return visited[self.tag]
 		

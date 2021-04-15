@@ -1,0 +1,28 @@
+interacting with the timeline and canvas:
+
+hold left mouse button to move the view, scroll to zoom in and out
+click with left mouse button to select a dot
+
+press R: switch recording on/off, default is off
+press Space: switch timeflow on/off, default is off
+press F: forget the selected dot
+press H: hide the selected dot
+press L: switch labels ont he canvas on/off, default is off
+
+When recording is set on:
+
+hold right mouse button to move the dot around
+
+press B + click right mouse button on an unselected dot to
+bind the selected dot to it
+
+press B + click right mouse button on the selected dot to
+delete the current bind
+
+
+
+Interacting with damperprofile painter:
+
+hold left mouse button to bloat the shape
+hold right mouse button to deflate the shape
+

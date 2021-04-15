@@ -1,6 +1,14 @@
 #ifndef WAV_DATA_HPP_
 #define WAV_DATA_HPP_
 
+/*
+All resampling and interpolation is done using something
+that is, or is similar to, the Smith-Gosset algorithm.
+
+The implementation here loosely follows what is described at
+https://ccrma.stanford.edu/~jos/resample/Implementation.html
+*/
+
 uint8_t GUID_rest[14] = {0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x80,
 						 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71};
 

@@ -256,15 +256,6 @@ class ToolboxTemplate(tk.Frame):
 		self.toolBox = tk.Frame(self.canvas, css.grey1Frame)	
 		self.canvas.create_window(0, 0, window=self.toolBox, anchor="nw")
 
-		self.canvas.tag_bind(
-				"all", "<Button-4>", 
-				lambda x: self.scroll_canvas(event=x, direction=-1)
-				)	
-		self.canvas.tag_bind(
-				"all", "<Button-5>",
-				lambda x: self.scroll_canvas(event=x, direction=1)
-				)
-		
 		self.toolBox.grid_columnconfigure(4, weight=1)
 		self.toolBox.grid_rowconfigure(20, weight=1)
 		

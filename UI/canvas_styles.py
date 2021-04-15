@@ -1,4 +1,11 @@
 
+"""
+All styles for the tkinter widgets are stored here.
+Why this and not ttk Styles? There are no ttk styles for
+canvas objects. Using the same method to stylize everything
+feels correct to me.
+"""
+
 ##################### fonts ################
 
 helvetica20 = ["Helvetica", 20]

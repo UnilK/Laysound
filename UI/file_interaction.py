@@ -14,6 +14,11 @@ import copy
 import UI.config as config
 
 class FileInteraction():
+	
+	"""
+	class for interacting with the save files.
+	"""
+
 	def __init__(self, parent):
 
 		self.parent = parent

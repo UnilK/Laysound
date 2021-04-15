@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import scrolledtext
 
 from UI.location_data import *
 from UI.record_page import RecordPage
@@ -11,7 +12,27 @@ class HelpPage(tk.Frame):
 	def __init__(self, parent, **kwargs):
 		tk.Frame.__init__(self, parent, css.grey1Frame, **kwargs)
 		self.parent = parent
+		
+		self.grid_columnconfigure(0, weight=1)
+		self.grid_rowconfigure(0, weight=1)
 
+		self.helpText = "No help"
+
+		with open("UI/help.txt", "r") as helpFile:
+			self.helpText = helpFile.read()
+
+		self.textBox = tk.scrolledtext.ScrolledText(
+				self,
+				background="#494949",
+				foreground="#eee",
+				font=css.helvetica14
+				)
+		
+		self.textBox.grid(row=0, column=0, sticky="nwes")
+
+		self.textBox.insert("insert", self.helpText)
+
+		
 class NavBar(tk.Frame):
 	def __init__(self, parent, **kwargs):
 		
@@ -20,13 +41,9 @@ class NavBar(tk.Frame):
 
 		self.grid_rowconfigure(0, weight=1)
 		
-		self.recordPageButton = tk.Button(
-				self, css.grey1Button, text="Record",
-				command=lambda: self.parent.switch_page(self.parent.recordPage))
-
 		self.helpPageButton = tk.Button(
-				self, css.grey1Button, text="Help",
-				command=lambda: self.parent.switch_page(self.parent.helpPage))
+				self, css.grey1Button, text="help",
+				command=self.parent.switch_page)
 		
 		self.quickSaveButton = tk.Button(
 				self,
@@ -69,8 +86,7 @@ class NavBar(tk.Frame):
 		self.loadButton.grid(row=0, column=3, sticky="nw", pady=1)
 		self.renderButton.grid(row=0, column=4, sticky="nw", pady=1)
 
-		self.recordPageButton.grid(row=0, column=5, sticky="nw", pady=1)
-		self.helpPageButton.grid(row=0, column=7, sticky="nw", pady=1)
+		self.helpPageButton.grid(row=0, column=5, sticky="nw", pady=1)
 
 
 
@@ -101,12 +117,19 @@ class MainFrame(tk.Frame):
 	def update_title(self):
 		self.parent.title(self.title+" - "+config.project.name)
 
-	def switch_page(self, nextPage):
+	def switch_page(self):
 
-		if nextPage != self.currentPage:
-			self.currentPage.grid_forget()
-			self.currentPage = nextPage
-			self.currentPage.grid(row=1, sticky="nswe")
+		self.currentPage.grid_forget()
+		
+		if self.currentPage == self.recordPage:
+			self.currentPage = self.helpPage
+			self.navBar.helpPageButton.configure(text="back")
+		
+		elif self.currentPage == self.helpPage:
+			self.currentPage = self.recordPage
+			self.navBar.helpPageButton.configure(text="help")
+		
+		self.currentPage.grid(row=1, sticky="nswe")
 	
 	def safe_close(self):
 
